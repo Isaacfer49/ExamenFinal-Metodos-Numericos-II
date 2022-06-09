@@ -1,0 +1,12 @@
+##Fernandez Paz Isaac Santiago.
+#Usando las bibliotecas numpy y scipy
+import numpy as np
+from scipy import integrate
+
+  
+#Utilizando la funcion proporcionada.
+fx = lambda x: (2)*(np.exp(x))
+
+#La funcion ' integrate. romberg' se encarga de compactar todos los procesos requeridos para cada una de las iteraciones.
+Integral = integrate.romberg(fx, 0, 4, show = True)
+print(Integral)
