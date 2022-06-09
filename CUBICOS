@@ -1,3 +1,4 @@
+
 from scipy.interpolate import CubicSpline
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,7 +8,7 @@ plt.style.use('seaborn-poster')
 x = [2.0 ,2.5,3.0,3.5,4.0,4.5]
 y = [3.2465,6.5444, 11.604, 18.834, 28.650, 41.479]
 
-# use bc_type = 'natural' adds the constraints as we described above
+
 f = CubicSpline(x, y)
 x_new = np.linspace(0, 2, 100)
 y_new = f(x_new)
