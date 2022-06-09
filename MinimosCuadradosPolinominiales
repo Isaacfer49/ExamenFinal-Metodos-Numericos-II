@@ -1,0 +1,52 @@
+##Fernandez Paz Isaac Santiago.
+
+
+import numpy as np
+import pylab as pl
+from scipy import linalg
+
+def main():
+	n = 2 # grado de aproximacion del polinomio
+	x = np.array([2.0 , 2.5 , 3.0 , 3.5, 4.0,4.5], float)	# valores de x
+	y = np.array([3.2465,6.5444,11.604,18.834,28.650,41.479], float)	#  valores de y
+	xs, xy = sistema_ecuaciones(x, y, n)	#  obteniendo ecuaciones normales para minimos cuadrados polinominiales.
+	xs = np.reshape(xs, ((n + 1), (n + 1)))	
+	xy = np.reshape(xy, ((n + 1), 1))
+	print(xs, '\n\n', xy)
+	a = np.linalg.solve(xs, xy)	# resuelve el sistema de ecuaciones
+	print('\n', a)	
+	error = e_error(y, np.array(fn(x, a)))	# determinando el errror del polinomio.
+	print("\nE =",error)
+	plot(x, y, fn(x, a))	# imprimiendo los datos de el polinomio
+	
+def sistema_ecuaciones(x, y, n):
+	xs = np.array([]); xy = np.array([])	# xs es la suma de los valores de x, xy es el producto.
+	for index in range(0, (n + 1)):
+		for exp in range(0, (n + 1)):
+			tx = np.sum(x**(index + exp))	
+			xs = np.append(xs, tx)
+		ty = np.sum(y * (x**index))	
+		xy = np.append(xy, ty)
+	return xs, xy
+
+def e_error(y, fn):
+	return np.sum((y - fn)**2)	#  encontrando el error. E = \sum_{i=1}^{m} (y_{i} - P(x_{i}))**2
+
+def fn(x, a):
+	px = 0
+	for index in range(0, np.size(a)):
+		px += (a[index] * (x**index))	# evaluando el polinomio. P(x)
+	return px
+
+def plot(x, y, fn):
+	pl.figure(figsize=(8, 6), dpi=80)
+	pl.subplot(1, 1, 1)
+	pl.plot(x, y, color='blue', linewidth=2.0, linestyle='-', label='y')
+	pl.subplot(1, 1, 1)
+	pl.plot(x, fn, color='red', linewidth=3.0, linestyle='--', label='P(x)')
+	pl.legend(loc='upper left')
+	pl.grid()
+	pl.show()
+
+if __name__ == '__main__':
+	main()
